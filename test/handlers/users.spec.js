@@ -13,8 +13,6 @@ describe('Manage Users', function () {
     var userOneId;
 
     before(function (done) {
-        console.log('>>> before');
-
         dbHelper.clearDB(function (err) {
             if (err) {
                 return done(err);

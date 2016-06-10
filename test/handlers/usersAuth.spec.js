@@ -13,8 +13,6 @@ describe('User Register/ LogIn / LogOut', function () {
     var agent = request.agent(app);
 
     before(function (done) {
-        console.log('>>> before');
-
         dbHelper.clearDB(function (err) {
             if (err) {
                 return done(err);
@@ -23,7 +21,7 @@ describe('User Register/ LogIn / LogOut', function () {
         });
     });
 
-    it('Register user', function (done) {
+    it.skip('Register user', function (done) {
 
         var userData = USER_FIXTURES.CLIENT_1;
         var registerData = {
@@ -61,7 +59,7 @@ describe('User Register/ LogIn / LogOut', function () {
             });
     });
 
-    it('Login with GOOD credentials (' + USER_FIXTURES.CLIENT_1.login + ', ' + USER_FIXTURES.CLIENT_1.pass + ')', function (done) {
+    it.skip('Login with GOOD credentials (' + USER_FIXTURES.CLIENT_1.email + ', ' + USER_FIXTURES.CLIENT_1.pass + ')', function (done) {
 
         var loginData = {
             login: USER_FIXTURES.CLIENT_1.login,
@@ -81,7 +79,7 @@ describe('User Register/ LogIn / LogOut', function () {
             });
     });
 
-    it('Login with BAD credentials - wrong pass', function (done) {
+    it.skip('Login with BAD credentials - wrong pass', function (done) {
 
         var loginData = USER_FIXTURES.CLIENT_1;
         loginData.pass += '_wrong_pass';
@@ -98,7 +96,7 @@ describe('User Register/ LogIn / LogOut', function () {
             });
     });
 
-    it('SignOut if Logined (' + USER_FIXTURES.CLIENT_1.email + ')', function (done) {
+    it.skip('SignOut if Logined (' + USER_FIXTURES.CLIENT_1.email + ')', function (done) {
 
         var loginData = USER_FIXTURES.CLIENT_1;
 

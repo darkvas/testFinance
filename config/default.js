@@ -15,7 +15,7 @@ var config = {
 };
 
 if (config.env === 'test') {
-    config.dbName = 'cash_flow_test';
+    config.dbName = 'cash_flow';
 }
 
 module.exports = config;

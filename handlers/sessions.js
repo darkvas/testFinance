@@ -1,7 +1,7 @@
 var CONST = require('../constants');
 var RESPONSE = require('../constants/response');
 
-var Session = function (db) {
+var Session = function () {
     'use strict';
 
     this.register = function (req, res, userId, userType) {
@@ -44,7 +44,6 @@ var Session = function (db) {
 
         next(err);
     };
-
 };
 
 module.exports = Session;

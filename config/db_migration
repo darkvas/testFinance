@@ -1,0 +1,5 @@
+use cash_flow
+
+if (db.getUser('cash_flow_user') == null) {
+    db.createUser({user: "cash_flow_user", pwd: "cash_flow_1234", roles: ["readWrite"]})
+}

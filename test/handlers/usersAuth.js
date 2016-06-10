@@ -3,19 +3,19 @@
 var request = require('supertest');
 var expect = require('chai').expect;
 
-var USERS = require('./../testHelpers/usersTemplates');
-var PreparingDb = require('./preparingDb');
+var USER_FIXTURES = require('./../fixtures/userFixtures');
+var dbHelper = require('./../dbHelper');
 var app = require('../../app');
+var User = require('../../models/user');
 
 describe('User Register/ LogIn / LogOut', function () {
 
     var agent = request.agent(app);
-    var preparingDb = new PreparingDb();
 
     before(function (done) {
         console.log('>>> before');
 
-        preparingDb.dropAllCollections(function (err, result) {
+        dbHelper.clearDB(function (err) {
             if (err) {
                 return done(err);
             }
@@ -25,7 +25,7 @@ describe('User Register/ LogIn / LogOut', function () {
 
     it('Register user', function (done) {
 
-        var userData = USERS.CLIENT_1;
+        var userData = USER_FIXTURES.CLIENT_1;
         var registerData = {
             login      : userData.login,
             pass       : userData.pass,
@@ -42,7 +42,7 @@ describe('User Register/ LogIn / LogOut', function () {
                     return done(err);
                 }
 
-                preparingDb.User
+                User
                     .findOne({login: userData.login, pass: userData.pass})
                     .exec(function (err, model) {
                         if (err) {
@@ -53,22 +53,19 @@ describe('User Register/ LogIn / LogOut', function () {
                             return done('Not Created');
                         }
 
-                        preparingDb.User
+                        User
                             .update({_id: model._id}, {confirmToken: ''}, function (err, data) {
-                                if (err) {
-                                    return done(err);
-                                }
-                                done();
+                                done(err);
                             });
                     });
             });
     });
 
-    it('Login with GOOD credentials (' + USERS.CLIENT_1.login + ', ' + USERS.CLIENT_1.pass + ')', function (done) {
+    it('Login with GOOD credentials (' + USER_FIXTURES.CLIENT_1.login + ', ' + USER_FIXTURES.CLIENT_1.pass + ')', function (done) {
 
         var loginData = {
-            login: USERS.CLIENT_1.login,
-            pass : USERS.CLIENT_1.pass
+            login: USER_FIXTURES.CLIENT_1.login,
+            pass : USER_FIXTURES.CLIENT_1.pass
         };
 
         agent
@@ -86,7 +83,7 @@ describe('User Register/ LogIn / LogOut', function () {
 
     it('Login with BAD credentials - wrong pass', function (done) {
 
-        var loginData = USERS.CLIENT_1;
+        var loginData = USER_FIXTURES.CLIENT_1;
         loginData.pass += '_wrong_pass';
 
         agent
@@ -101,9 +98,9 @@ describe('User Register/ LogIn / LogOut', function () {
             });
     });
 
-    it('SignOut if Logined (' + USERS.CLIENT_1.login + ')', function (done) {
+    it('SignOut if Logined (' + USER_FIXTURES.CLIENT_1.email + ')', function (done) {
 
-        var loginData = USERS.CLIENT_1;
+        var loginData = USER_FIXTURES.CLIENT_1;
 
         agent
             .post('/user/login')
@@ -118,10 +115,7 @@ describe('User Register/ LogIn / LogOut', function () {
                     .post('/user/logout')
                     .expect(200)
                     .end(function (err) {
-                        if (err) {
-                            return done(err);
-                        }
-                        done();
+                        done(err);
                     });
             });
     });

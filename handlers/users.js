@@ -1,10 +1,11 @@
 var CONST = require('../constants');
 var RESPONSE = require('../constants/response');
+var mongoose = require('mongoose');
+var User = require('../models/user');
 
-var UserHandler = function (db) {
+var UserHandler = function () {
 
     // var async = require('async');
-    var User = db.model(CONST.MODELS.USER);
     var crypto = require('crypto');
 
     function isDuplicateMongoError(err, fieldName) {

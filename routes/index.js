@@ -1,16 +1,14 @@
 var SessionHandler = require('../handlers/sessions');
 
-module.exports = function (app, db) {
+module.exports = function (app) {
+    'use strict';
 
-    var logWriter = require('../helpers/logWriter')();
-    var models = require('../models/index')(db);
+    var usersRouter = require('./users');
 
-    var usersRouter = require('./users')(db);
-
-    var session = new SessionHandler(db);
+    var session = new SessionHandler();
 
     app.get('/', function (req, res, next) {
-        res.status(200).send('Express start succeed');
+        res.status(200).send('Express have started successfully');
     });
 
     app.use('/user', usersRouter);
@@ -23,14 +21,8 @@ module.exports = function (app, db) {
         var status = err.status || 500;
 
         if (process.env.NODE_ENV === 'production') {
-            if (status === 404 || status === 401) {
-                logWriter.log('', err.message + '\n' + err.stack);
-            }
             res.status(status);
         } else {
-            if (status !== 401) {
-                logWriter.log('', err.message + '\n' + err.stack);
-            }
             res.status(status).send(err.message + '\n' + err.stack);
         }
 

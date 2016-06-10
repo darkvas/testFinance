@@ -6,8 +6,8 @@ module.exports = {
     },
 
     MODELS: {
-        USER   : 'User',
-        SESSION: 'Session'
+        USER   : 'user',
+        SESSION: 'session'
     },
 
     CURRENCY: {

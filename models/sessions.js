@@ -1,15 +1,10 @@
 var CONST = require('../constants');
+var mongoose = require('mongoose');
 
-module.exports = function (db) {
-    'use strict';
+var sessionSchema = new mongoose.Schema({
+    sessionId: String
+}, {
+    collection: CONST.MODELS.SESSION + 's'
+});
 
-    var mongoose = require('mongoose');
-
-    var session = new mongoose.Schema({
-        sessionId: String
-    }, {
-        collection: CONST.MODELS.SESSION + 's'
-    });
-
-    db.model(CONST.MODELS.SESSION, session);
-};
+module.exports = mongoose.model(CONST.MODELS.SESSION, sessionSchema);

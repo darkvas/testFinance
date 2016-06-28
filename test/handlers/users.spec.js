@@ -12,15 +12,6 @@ describe('Manage Users', function () {
     var agent = request.agent(app);
     var userOneId;
 
-    before(function (done) {
-        dbHelper.clearDB(function (err) {
-            if (err) {
-                return done(err);
-            }
-            done();
-        });
-    });
-
     it('Create one user', function (done) {
 
         var userData = USER_FIXTURES.CLIENT_1;
@@ -149,6 +140,12 @@ describe('Manage Users', function () {
             .end(function (err, res) {
                 done(err);
             });
+    });
+
+    after(function (done) {
+        dbHelper.clearDB(function (err) {
+            done(err);
+        });
     });
 
 });

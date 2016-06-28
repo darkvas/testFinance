@@ -12,15 +12,6 @@ describe('User Register/ LogIn / LogOut', function () {
 
     var agent = request.agent(app);
 
-    before(function (done) {
-        dbHelper.clearDB(function (err) {
-            if (err) {
-                return done(err);
-            }
-            done();
-        });
-    });
-
     it.skip('Register user', function (done) {
 
         var userData = USER_FIXTURES.CLIENT_1;
@@ -116,6 +107,12 @@ describe('User Register/ LogIn / LogOut', function () {
                         done(err);
                     });
             });
+    });
+
+    before(function (done) {
+        dbHelper.clearDB(function (err) {
+            done(err);
+        });
     });
 
 });

@@ -7,21 +7,23 @@ module.exports = function (app) {
 
     var session = new SessionHandler();
 
-    app.get('/', function (req, res, next) {
+    app.get('/', function (req, res) {
         res.status(200).send('Express have started successfully');
     });
 
     app.use('/user', usersRouter);
 
     function notFound(req, res, next) {
-        next();
+        var err = new Error('Not found');
+        err.status = 404;
+        next(err);
     }
 
     function errorHandler(err, req, res, next) {
         var status = err.status || 500;
 
         if (process.env.NODE_ENV === 'production') {
-            res.status(status);
+            res.status(status).send(err.message);
         } else {
             res.status(status).send(err.message + '\n' + err.stack);
         }

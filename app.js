@@ -3,9 +3,7 @@ var express = require('express');
 var morgan = require('morgan');
 var path = require('path');
 
-
 var app = express();
-
 app.use(morgan('dev'));
 app.use(bodyParser.json({strict: false, inflate: false, type: 'application/json'}));
 app.use(bodyParser.urlencoded({extended: false}));

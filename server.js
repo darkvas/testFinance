@@ -14,7 +14,7 @@ db.on('error', function (err) {
     process.exit(1);
 });
 
-db.once('open', function callback() {
+db.once('open', function () {
     app.listen(config.appPort, function () {
         console.log('Server have started successfully on port: ' + config.appPort + ' in ' + config.env + ' version');
     });
